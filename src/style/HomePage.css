@@ -1,18 +1,18 @@
 
 
 .banner{
-    margin: 0px 150px;
+    padding: 0px 150px;
   }
   
   @media (max-width: 600px) {
     .banner{
-      margin: 0px 50px;
+      padding: 0px;
     }
   }
   
   @media (min-width: 600px) and (max-width: 1024px) {
     .banner{
-      margin: 0px 80px;
+      padding: 0px 20px;
     }
   }
 
@@ -36,5 +36,59 @@
 }
 
 .card:hover .intro{
+  display: block;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0; /* Align the dropdown to the left by placing its end below the icon */
+  background: linear-gradient(180deg, rgba(58,58,58,1) 0%, rgba(26,26,26,1) 100%); /* Gradient background */
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+/* Show the dropdown content */
+.dropdown-content a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Icons in the dropdown */
+.dropdown-content a .svg-inline--fa {
+  margin-right: 10px;
+}
+
+/* Dropdown button styles */
+.dropdown .dropbtn {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown .dropbtn .svg-inline--fa {
+  margin-right: 8px;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
   display: block;
 }

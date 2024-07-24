@@ -16,7 +16,7 @@ const Footer = () => {
           <p className="font-semibold text-base pb-5">Subscribe</p>
           <p>Get 10% off your first order</p>
           <div className="relative mt-3 lg:w-full w-2/3">
-            <input type="email" name="email" id="email" placeholder="Enter your email" className="bg-transparent border-2 border-gray-300 p-2 rounded-sm pe-10 w-full" />
+            <input type="email" name="email" id="footer-email" placeholder="Enter your email" className="bg-transparent border-2 border-gray-300 p-2 rounded-sm pe-10 w-full" />
             <img src={sendVector} alt="" className="absolute right-2 top-3" />
           </div>
         </div>
