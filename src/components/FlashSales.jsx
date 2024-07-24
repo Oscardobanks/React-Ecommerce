@@ -13,34 +13,41 @@ import fiveStar from "../assets/Five star.png";
 import fourStar from "../assets/Four Star.png";
 import fourHalfStar from "../assets/Four Half Star.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../actions/cartSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 const FlashSales = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const flashSales = [
     {
+      id: uuidv4(),
       name: "HAVIT HV-G92 Gamepad",
       percent: "-40%",
-      price: "$120",
-      strikedPrice: "$160",
+      price: 120,
+      strikedPrice: 160,
       stars: fiveStar,
       number: "(88)",
       image: Frame611,
     },
     {
+      id: uuidv4(),
       name: "AK-900 Wired Keyboard",
       percent: "-35%",
-      price: "$960",
-      strikedPrice: "$1160",
+      price: 960,
+      strikedPrice: 1160,
       stars: fourStar,
       number: "(75)",
       image: Frame603,
     },
     {
+      id: uuidv4(),
       name: "IPS LCD Gaming Monitor",
       percent: "-30%",
-      price: "$370",
-      strikedPrice: "$400",
+      price: 370,
+      strikedPrice: 400,
       stars: fiveStar,
       number: "(99)",
       image: Frame613,
@@ -48,8 +55,8 @@ const FlashSales = () => {
     {
       name: "S-Series Comfort Chair",
       percent: "-25%",
-      price: "$375",
-      strikedPrice: "$400",
+      price: 375,
+      strikedPrice: 400,
       stars: fourHalfStar,
       number: "(99)",
       image: Frame614,
@@ -63,6 +70,10 @@ const FlashSales = () => {
       }
     });
   };
+
+  const addItemToCart = (flashSale) => {
+    dispatch(addToCart(flashSale));
+  }
 
   return (
     <div>
@@ -133,7 +144,7 @@ const FlashSales = () => {
                   </div>
                 </div>
                 <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                  <button className="w-full py-1 bg-black text-white">
+                  <button onClick={() => addItemToCart(flashSale)} className="w-full py-1 bg-black text-white">
                     Add To Cart
                   </button>
                 </div>
@@ -141,9 +152,9 @@ const FlashSales = () => {
               <div className="flex flex-col gap-1">
                 <p className="text-md font-bold">{flashSale.name}</p>
                 <div className="flex gap-2">
-                  <p className="text-red-600 font-medium">{flashSale.price}</p>
+                  <p className="text-red-600 font-medium">${flashSale.price}</p>
                   <p className="text-gray-400 font-medium line-through">
-                    {flashSale.strikedPrice}
+                    ${flashSale.strikedPrice}
                   </p>
                 </div>
                 <div className="flex gap-2">

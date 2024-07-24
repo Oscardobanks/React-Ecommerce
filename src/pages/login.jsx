@@ -50,7 +50,6 @@ const Login = () => {
                   values.password
                 );
                 const user = dispatch(login(credentials));
-                // Update the user state in the Redux store
                 dispatch({ type: "UPDATE_USER", payload: user });
                 setTimeout(() => {
                   navigate("/");

@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { auth } from "../../auth/firebase";
 import { toast } from "react-toastify";
 
@@ -42,7 +45,6 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
-// Define the registerStart, registerSuccess, and registerFailure actions using createAction from Redux Toolkit
 const { actions: authActions } = createSlice({
   name: "auth",
   initialState: {
@@ -65,7 +67,6 @@ const { actions: authActions } = createSlice({
     },
   },
 });
-
 export const { registerStart, registerSuccess, registerFailure } = authActions;
 
 const authSlice = createSlice({
@@ -108,5 +109,6 @@ const authSlice = createSlice({
       });
   },
 });
+export const { UPDATE_USER } = authActions;
 
 export default authSlice.reducer;

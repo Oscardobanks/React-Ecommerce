@@ -16,31 +16,34 @@ import Frame616 from "../assets/Frame 616.png";
 import Frame617 from "../assets/Frame 617.png";
 import HomeNavbar from "../layout/homeNavbar";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../actions/cartSlice";
 
 const Wishlist = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const Products = [
     {
       name: "Gucci duffle bag",
       percent: "-35%",
-      price: "$960",
-      strikedPrice: "$1160",
+      price: 960,
+      strikedPrice: 1160,
       image: Frame606,
     },
     {
       name: "RGB liquid CPU Cooler",
-      price: "$1960",
+      price: 1960,
       image: Frame610,
     },
     {
       name: "GP11 Shooter USB Gamepad",
-      price: "$550",
+      price: 550,
       image: Frame616,
     },
     {
       name: "Quilted Satin Jacket",
-      price: "$750",
+      price: 750,
       image: Frame617,
     },
   ];
@@ -49,15 +52,15 @@ const Wishlist = () => {
     {
       name: "ASUS FHD Gaming Laptop",
       percent: "-35%",
-      price: "$960",
-      strikedPrice: "$1160",
+      price: 960,
+      strikedPrice: 1160,
       stars: fiveStar,
       number: "(65)",
       image: Frame602,
     },
     {
       name: "IPS LCD Gaming Monitor",
-      price: "$1160",
+      price: 1160,
       stars: fiveStar,
       number: "(65)",
       image: Frame613,
@@ -65,14 +68,14 @@ const Wishlist = () => {
     {
       name: "HAVIT HV-G92 Gamepad",
       new: "New",
-      price: "$560",
+      price: 560,
       stars: fiveStar,
       number: "(65)",
       image: Frame611,
     },
     {
       name: "AK-900 Wired Keyboard",
-      price: "$200",
+      price: 200,
       stars: fiveStar,
       number: "(65)",
       image: Frame603,
@@ -86,6 +89,10 @@ const Wishlist = () => {
       }
     });
   };
+   
+  const addItemToCart = (product) => {
+    dispatch(addToCart(product));
+  }
 
   return (
     <div>
@@ -119,18 +126,18 @@ const Wishlist = () => {
                   </div>
                 </div>
                 <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                  <div className="flex gap-2 items-center w-full py-1 justify-center bg-black text-white cursor-pointer">
+                  <button onClick={() => addItemToCart(Product)} className="flex gap-2 items-center w-full justify-center py-1 bg-black text-white">
                     <FontAwesomeIcon icon={faShoppingCart} />
                     <p>Add To Cart</p>
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col gap-1">
                 <p className="text-md font-bold">{Product.name}</p>
                 <div className="flex gap-2">
-                  <p className="text-red-600 font-medium">{Product.price}</p>
+                  <p className="text-red-600 font-medium">${Product.price}</p>
                   <p className="text-gray-400 font-medium line-through">
-                    {Product.strikedPrice}
+                    ${Product.strikedPrice}
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -181,18 +188,18 @@ const Wishlist = () => {
                   </div>
                 </div>
                 <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                  <div className="flex gap-2 items-center w-full py-1 justify-center bg-black text-white cursor-pointer">
+                <button onClick={() => addItemToCart(Product)} className="flex gap-2 items-center w-full justify-center py-1 bg-black text-white">
                     <FontAwesomeIcon icon={faShoppingCart} />
                     <p>Add To Cart</p>
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col gap-1">
                 <p className="text-md font-bold">{Product.name}</p>
                 <div className="flex gap-2">
-                  <p className="text-red-600 font-medium">{Product.price}</p>
+                  <p className="text-red-600 font-medium">${Product.price}</p>
                   <p className="text-gray-400 font-medium line-through">
-                    {Product.strikedPrice}
+                    ${Product.strikedPrice}
                   </p>
                 </div>
                 <div className="flex gap-2">
