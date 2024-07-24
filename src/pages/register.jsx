@@ -1,27 +1,26 @@
-import signupImg from "../assets/signup.jpg";
-// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import googleLogo from "../assets/search.svg";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../auth/firebase";
+import {
+  registerFailure,
+  registerStart,
+  registerSuccess,
+} from "../actions/authActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import Footer from "../layout/footer";
+import signupImg from "../assets/signup.jpg";
 import NavbarComponent from "../layout/navbar";
+import Footer from "../layout/footer";
 import "../style/register.css";
 
 const Register = () => {
-  // const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleGoToLogin = () => {
@@ -38,7 +37,7 @@ const Register = () => {
 
   return (
     <>
-      <NavbarComponent active={'signup'} />
+      <NavbarComponent active={"signup"} />
       <div className="my-16 mb-32 flex lg:flex-row flex-col md:items-center xl:gap-28 gap-10 xl:me-[150px] lg:me-[80px]">
         <div>
           <img src={signupImg} alt="" className="signupImg" />
@@ -51,6 +50,7 @@ const Register = () => {
             initialValues={{ name: "", email: "", password: "" }}
             validationSchema={validationSchema}
             onSubmit={async (values, { setSubmitting }) => {
+              dispatch(registerStart());
               setIsLoading(true);
               try {
                 await createUserWithEmailAndPassword(
@@ -58,8 +58,11 @@ const Register = () => {
                   values.email,
                   values.password
                 );
+                dispatch(registerSuccess(auth.currentUser));
                 toast.success("User Registered Successfully!!");
-                navigate("/login");
+                setTimeout(() => {
+                  navigate("/login");
+                }, 3000);
                 setSubmitting(false);
               } catch (error) {
                 let errorMessage = error.message;
@@ -69,8 +72,10 @@ const Register = () => {
                   errorMessage =
                     "Password is too weak. Please use a stronger password.";
                 } else if (error.code === "auth/invalid-email") {
-                  errorMessage = "Invalid email address. Please check your input.";
+                  errorMessage =
+                    "Invalid email address. Please check your input.";
                 }
+                dispatch(registerFailure(errorMessage));
                 toast.error(errorMessage);
                 setSubmitting(false);
               } finally {
@@ -120,15 +125,15 @@ const Register = () => {
                         placeholder="Password"
                       />
                       {/* <div className="password-icons">
-                        <button
-                          type="button"
-                          onClick={togglePasswordVisibility}
-                        >
-                          <FontAwesomeIcon
-                            icon={showPassword ? faEyeSlash : faEye}
-                          />
-                        </button>
-                      </div> */}
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                      >
+                        <FontAwesomeIcon
+                          icon={showPassword ? faEyeSlash : faEye}
+                        />
+                      </button>
+                    </div> */}
                     </div>
                     <ErrorMessage
                       name="password"
@@ -141,7 +146,7 @@ const Register = () => {
                     className="create-account-button w-full rounded-sm text-white font-semibold"
                     disabled={isSubmitting || isLoading}
                   >
-                    {isLoading ? 'Registering....' : 'Create account' }
+                    {isLoading ? "Registering...." : "Create account"}
                   </button>
                   <button
                     type="submit"
@@ -166,7 +171,6 @@ const Register = () => {
           </Formik>
         </div>
       </div>
-
       <Footer />
     </>
   );
