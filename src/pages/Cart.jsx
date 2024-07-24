@@ -1,41 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../layout/footer";
 import HomeNavbar from "../layout/homeNavbar";
-import Frame611 from "../assets/Frame 611.png";
-import Frame613 from "../assets/Frame 613.png";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
-  const [quantities, setQuantities] = useState({
-    0: 1,
-    1: 1,
+  const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const [quantities, setQuantities] = useState(() => {
+    const initialQuantities = {};
+    cartItems.forEach((item) => {
+      initialQuantities[item.id] = 1;
+    });
+    return initialQuantities;
   });
 
-  const CardContent = [
-    {
-      id: 0,
-      image: Frame613,
-      name: "LCD Monitor",
-      price: 650,
-    },
-    {
-      id: 1,
-      image: Frame611,
-      name: "H1 Gamepad",
-      price: 650,
-    },
-  ];
-
-  const handleQuantityChange = (index, newQuantity) => {
+  const handleQuantityChange = (itemId, newQuantity) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [index]: parseInt(newQuantity),
+      [itemId]: parseInt(newQuantity),
     }));
   };
 
-  const totalAmount = CardContent.reduce((total, content) => {
-    return total + content.price * quantities[content.id];
+  const totalAmount = cartItems.reduce((total, item) => {
+    return total + item.price * quantities[item.id];
   }, 0);
+
+  const goToHome = () => {
+    navigate("/");
+  };
 
   return (
     <div>
@@ -61,17 +55,17 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {CardContent.map((content) => (
+              {cartItems.map((item) => (
                 <tr
-                  key={content.id}
+                  key={item.id}
                   className="shadow flex items-center sm:px-10 px-2 py-2 font-semibold"
                 >
                   <td className="flex sm:flex-row flex-col sm:items-center gap-2 w-full">
-                    <img src={content.image} alt="" width={40} />
-                    <p>{content.name}</p>
+                    <img src={item.image} alt="" width={40} />
+                    <p>{item.name}</p>
                   </td>
 
-                  <td className="w-full">${content.price}</td>
+                  <td className="w-full">${item.price}</td>
 
                   <td className="w-full">
                     <input
@@ -79,15 +73,15 @@ const Cart = () => {
                       name="quantity"
                       id="quantity"
                       min={0}
-                      value={quantities[content.id]}
+                      value={quantities[item.id]}
                       onChange={(e) =>
-                        handleQuantityChange(content.id, e.target.value)
+                        handleQuantityChange(item.id, e.target.value)
                       }
                       className="w-16"
                     />
                   </td>
 
-                  <td>${content.price * quantities[content.id]}</td>
+                  <td>${item.price * quantities[item.id]}</td>
                 </tr>
               ))}
             </tbody>
@@ -95,7 +89,10 @@ const Cart = () => {
         </table>
 
         <div className="flex items-center justify-between gap-5 mt-5 mb-16">
-          <button className="text-black font-bold bg-white border-2 rounded-sm py-2 px-10">
+          <button
+            onClick={goToHome}
+            className="text-black font-bold bg-white border-2 rounded-sm py-2 px-10"
+          >
             Return To Shop
           </button>
           <button className="text-black font-bold bg-white border-2 rounded-sm py-2 px-10">

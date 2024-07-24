@@ -21,33 +21,42 @@ import color1 from "../assets/color 1.png";
 import color2 from "../assets/color 2.png";
 import color3 from "../assets/color 3.png";
 import color4 from "../assets/color 4.png";
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from "react-redux";
+import { addToCart } from "../actions/cartSlice";
 
 const OurProducts = () => {
+  const dispatch = useDispatch();
+
   const Products = [
     {
+      id: uuidv4(),
       name: "Bread Dry Dog Food",
-      price: "$100",
+      price: 100,
       stars: threeStar,
       number: "(35)",
       image: Frame604,
     },
     {
+      id: uuidv4(),
       name: "CANON EOS DSLR Camera",
-      price: "$360",
+      price: 360,
       stars: fourStar,
       number: "(95)",
       image: Frame601,
     },
     {
+      id: uuidv4(),
       name: "ASUS FHD Gaming Laptop",
-      price: "$700",
+      price: 700,
       stars: fiveStar,
       number: "(325)",
       image: Frame602,
     },
     {
+      id: uuidv4(),
       name: "Curology Product Set",
-      price: "$500",
+      price: 500,
       stars: fourStar,
       number: "(145)",
       image: Frame607,
@@ -56,40 +65,48 @@ const OurProducts = () => {
 
   const newProducts = [
     {
+      id: uuidv4(),
       name: "Kids Electric Car",
       new: "New",
-      price: "$960",
+      price: 960,
       stars: fiveStar,
       number: "(65)",
       image: Frame608,
       color: color1,
     },
     {
+      id: uuidv4(),
       name: "Jr. Zoom Soccer Cleats",
-      price: "$1160",
+      price: 1160,
       stars: fiveStar,
       number: "(35)",
       image: Frame609,
       color: color2,
     },
     {
+      id: uuidv4(),
       name: "GP11 Shooter USB Gamepad",
       new: "New",
-      price: "$660",
+      price: 660,
       stars: fourHalfStar,
       number: "(55)",
       image: Frame616,
       color: color3,
     },
     {
+      id: uuidv4(),
       name: "Quilted Satin Jacket",
-      price: "$660",
+      price: 660,
       stars: fourHalfStar,
       number: "(55)",
       image: Frame617,
       color: color4,
     },
   ];
+  
+  const addItemToCart = (product) => {
+    dispatch(addToCart(product));
+  }
 
   return (
     <div className="mt-10">
@@ -131,15 +148,15 @@ const OurProducts = () => {
                 </div>
               </div>
               <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                <div className="w-full py-1 text-center bg-black text-white cursor-pointer">
+                <button onClick={() => addItemToCart(Product)} className="w-full py-1 bg-black text-white">
                   Add To Cart
-                </div>
+                </button>
               </div>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-md font-bold">{Product.name}</p>
               <div className="flex items-center gap-2">
-                <p className="text-red-600 font-medium">{Product.price}</p>
+                <p className="text-red-600 font-medium">${Product.price}</p>
                 <div className="flex gap-2">
                   <img src={Product.stars} alt="" />
                   <p className="text-gray-400 font-semibold">
@@ -172,16 +189,16 @@ const OurProducts = () => {
                 </div>
               </div>
               <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                <div className="w-full py-1 text-center bg-black text-white cursor-pointer">
+                <button onClick={() => addItemToCart(Product)} className="w-full py-1 bg-black text-white">
                   Add To Cart
-                </div>
+                </button>
               </div>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-md font-bold">{Product.name}</p>
               <div className="flex items-center gap-2">
                 <p className="text-md text-red-700 font-medium">
-                  {Product.price}
+                  ${Product.price}
                 </p>
                 <div className="flex gap-2">
                   <img src={Product.stars} alt="" />

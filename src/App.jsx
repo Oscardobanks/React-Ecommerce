@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 
 function App() {
+
   return (
     <Provider store={store}>
       <BrowserRouter>
