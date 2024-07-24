@@ -30,7 +30,7 @@ const HomeNavbar = ({ active }) => {
   };
   
   // Use useSelector to access the global state variable
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   HomeNavbar.propTypes = {
     active: PropTypes.string.isRequired,
@@ -98,7 +98,7 @@ const HomeNavbar = ({ active }) => {
               <NavLink to="/cart">
                 <FontAwesomeIcon icon={faCartShopping} />
               </NavLink>
-              {isLoggedIn && (
+              {/* {isLoggedIn && (
                 <div className="dropdown">
                   <button
                     onClick={toggleDropdown}
@@ -127,7 +127,35 @@ const HomeNavbar = ({ active }) => {
                     </div>
                   )}
                 </div>
-              )}
+              )} */}
+              <div className="dropdown">
+                  <button
+                    onClick={toggleDropdown}
+                    className=" focus:bg-red-700 focus:text-white focus:px-2 focus:pb-1 focus:rounded-full"
+                  >
+                    <FontAwesomeIcon icon={faUser} />
+                  </button>
+                  {isOpen && (
+                    <div className="dropdown-content">
+                      <NavLink to={"/account"}>
+                        <FontAwesomeIcon icon={faUser} /> Manage My Account
+                      </NavLink>
+                      <NavLink>
+                        <FontAwesomeIcon icon={faShoppingBag} /> My Order
+                      </NavLink>
+                      <NavLink>
+                        <FontAwesomeIcon icon={faTimesCircle} /> My
+                        Cancellations
+                      </NavLink>
+                      <NavLink>
+                        <FontAwesomeIcon icon={faStar} /> My Reviews
+                      </NavLink>
+                      <NavLink to={"/login"} onClick={handleLogout}>
+                        <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
             </div>
           </div>
           <Navbar.Collapse>
