@@ -27,10 +27,8 @@ const HomeNavbar = ({ active }) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('user')
   };
-  
-  // Use useSelector to access the global state variable
-    // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   HomeNavbar.propTypes = {
     active: PropTypes.string.isRequired,
@@ -98,7 +96,7 @@ const HomeNavbar = ({ active }) => {
               <NavLink to="/cart">
                 <FontAwesomeIcon icon={faCartShopping} />
               </NavLink>
-              {/* {isLoggedIn && (
+              {/* {user && (
                 <div className="dropdown">
                   <button
                     onClick={toggleDropdown}

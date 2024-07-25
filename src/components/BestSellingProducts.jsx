@@ -6,46 +6,59 @@ import Frame610 from "../assets/Frame 610.png";
 import Frame612 from "../assets/Frame 612.png";
 import fiveStar from "../assets/Five star.png";
 import fourHalfStar from "../assets/Four Half Star.png";
+import { v4 as uuidv4 } from 'uuid';
+import { addToCart } from "../actions/cartSlice";
+import { useDispatch } from "react-redux";
 
 const BestSellingProducts = () => {
-  const flashSales = [
+  const dispatch = useDispatch();
+
+  const products = [
     {
+      id: uuidv4(),
       name: "The north coat",
       percent: "-40%",
-      price: "$260",
-      strikedPrice: "$360",
+      price: 260,
+      strikedPrice: 360,
       stars: fiveStar,
       number: "(65)",
       image: Frame605,
     },
     {
+      id: uuidv4(),
       name: "Gucci duffle bag",
       percent: "-35%",
-      price: "$960",
-      strikedPrice: "$1160",
+      price: 960,
+      strikedPrice: 1160,
       stars: fourHalfStar,
       number: "(65)",
       image: Frame606,
     },
     {
+      id: uuidv4(),
       name: "RGB liquid CPU Cooler",
       percent: "-30%",
-      price: "$160",
-      strikedPrice: "$170",
+      price: 160,
+      strikedPrice: 170,
       stars: fourHalfStar,
       number: "(99)",
       image: Frame610,
     },
     {
+      id: uuidv4(),
       name: "Small BookShelf",
       percent: "-25%",
-      price: "$375",
+      price: 375,
       strikedPrice: "",
       stars: fiveStar,
       number: "(99)",
       image: Frame612,
     },
   ];
+  
+  const addItemToCart = (product) => {
+    dispatch(addToCart(product));
+  }
 
   return (
     <div>
@@ -67,7 +80,7 @@ const BestSellingProducts = () => {
           </div>
         </div>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-5 gap-10 mt-10">
-          {flashSales.map((flashSale, index) => (
+          {products.map((product, index) => (
             <div key={index} className="flex flex-col gap-3">
               <div className="card h-full relative">
                 <div className="h-full bg-[#F5F5F5] p-2">
@@ -82,27 +95,27 @@ const BestSellingProducts = () => {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <img src={flashSale.image} alt="" className="mb-5 -mt-10" />
+                    <img src={product.image} alt="" className="mb-5 -mt-10" />
                   </div>
                 </div>
                 <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                  <div className="w-full py-1 text-center bg-black text-white cursor-pointer">
+                  <button onClick={() => addItemToCart(product)} className="w-full py-1 bg-black text-white">
                     Add To Cart
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-md font-bold">{flashSale.name}</p>
+                <p className="text-md font-bold">{product.name}</p>
                 <div className="flex gap-2">
-                  <p className="text-red-600 font-medium">{flashSale.price}</p>
+                  <p className="text-red-600 font-medium">${product.price}</p>
                   <p className="text-gray-400 font-medium line-through">
-                    {flashSale.strikedPrice}
+                    ${product.strikedPrice}
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <img src={flashSale.stars} alt="" />
+                  <img src={product.stars} alt="" />
                   <p className="text-gray-400 font-semibold">
-                    {flashSale.number}
+                    {product.number}
                   </p>
                 </div>
               </div>

@@ -20,7 +20,6 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    // Add other actions as needed
   },
 });
 
