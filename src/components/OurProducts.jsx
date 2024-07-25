@@ -24,9 +24,16 @@ import color4 from "../assets/color 4.png";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../actions/cartSlice";
+import { addToWishlist } from "../actions/wishlistSlice";
+import PropTypes from 'prop-types';
 
-const OurProducts = () => {
+const OurProducts = ({setShowToast, setShowCardToast}) => {
   const dispatch = useDispatch();
+
+  OurProducts.propTypes = {
+    setShowToast: PropTypes.func.isRequired,
+    setShowCardToast: PropTypes.func.isRequired,
+  };
 
   const Products = [
     {
@@ -106,6 +113,12 @@ const OurProducts = () => {
   
   const addItemToCart = (product) => {
     dispatch(addToCart(product));
+    setShowCardToast((state) => !state);
+  }
+  
+  const addItemToWishlist = (Product) => {
+    dispatch(addToWishlist(Product));
+    setShowToast((state) => !state);
   }
 
   return (
@@ -135,9 +148,9 @@ const OurProducts = () => {
               <div className="h-full bg-[#F5F5F5] p-2">
                 <div className="flex justify-end">
                   <div className="flex flex-col gap-2 z-10">
-                    <div className="rounded-full p-2 py-1 bg-white">
-                      <FontAwesomeIcon icon={faHeart} />
-                    </div>
+                  <button onClick={() => addItemToWishlist(Product)} className="rounded-full p-2 py-1 bg-white">
+                        <FontAwesomeIcon icon={faHeart} />
+                      </button>
                     <div className="rounded-full p-2 py-1 bg-white">
                       <FontAwesomeIcon icon={faEye} />
                     </div>
@@ -176,9 +189,9 @@ const OurProducts = () => {
                     {Product.new}
                   </div>
                   <div className="flex flex-col gap-2 ms-32 z-10">
-                    <div className="rounded-full p-2 py-1 bg-white">
-                      <FontAwesomeIcon icon={faHeart} />
-                    </div>
+                  <button onClick={() => addItemToWishlist(Product)} className="rounded-full p-2 py-1 bg-white">
+                        <FontAwesomeIcon icon={faHeart} />
+                      </button>
                     <div className="rounded-full p-2 py-1 bg-white">
                       <FontAwesomeIcon icon={faEye} />
                     </div>

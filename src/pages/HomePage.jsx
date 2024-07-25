@@ -10,9 +10,38 @@ import OurProducts from "../components/OurProducts";
 import NewArrivals from "../components/NewArrivals";
 import Footer from "../layout/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeadphones, faHeadset, faShippingFast } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeadphones,
+  faHeadset,
+  faShippingFast,
+} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { Toast } from "flowbite-react";
+import { HiX } from "react-icons/hi";
 
 const HomePage = () => {
+  const [showToast, setShowToast] = useState(false);
+  const [showCardToast, setShowCardToast] = useState(false);
+  const toastTimer = 2000;
+  
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, toastTimer);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast, toastTimer]);
+
+  useEffect(() => {
+    if (showCardToast) {
+      const timer = setTimeout(() => {
+        setShowCardToast(false);
+      }, toastTimer);
+      return () => clearTimeout(timer);
+    }
+  }, [showCardToast, toastTimer]);
+
   const Cards = [
     {
       icon: faShippingFast,
@@ -32,17 +61,34 @@ const HomePage = () => {
   ];
   return (
     <div>
-      <HomeNavbar active={'home'} />
+      <HomeNavbar active={"home"} />
+      {showToast && (
+        <Toast className="fixed top-20 z-50 flex items-center gap-2 px-4 py-4 bg-lime-600 text-white text-sm shadow-md right-10 sm:flex-row justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <p className="font-bold">Item Added to Wishlist Successfully!</p>
+          </div>
+          <HiX onClick={() => setShowToast(false)} className="h-5 w-5" />
+        </Toast>
+      )}
+
+      {showCardToast && (
+        <Toast className="fixed top-20 z-50 flex items-center gap-2 px-4 py-4 bg-lime-600 text-white text-sm shadow-md right-10 sm:flex-row justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <p className="font-bold">Item Added to Cart Successfully!</p>
+          </div>
+          <HiX onClick={() => setShowCardToast(false)} className="h-5 w-5" />
+        </Toast>
+      )}
 
       <section className="mainContainer">
         <Banner />
-        <FlashSales />
+        <FlashSales setShowToast={setShowToast} setShowCardToast={setShowCardToast} />
         <hr className="my-16" />
         <Categories />
         <hr className="my-16" />
-        <BestSellingProducts />
+        <BestSellingProducts setShowToast={setShowToast} setShowCardToast={setShowCardToast} />
         <EnhanceExperience />
-        <OurProducts />
+        <OurProducts setShowToast={setShowToast} setShowCardToast={setShowCardToast} />
         <NewArrivals />
         <div className="flex md:flex-row flex-col gap-10 justify-evenly my-20">
           {Cards.map((card, index) => (
@@ -53,7 +99,7 @@ const HomePage = () => {
               <p className="text-xl uppercase font-semibold">{card.title}</p>
               <p className="text-sm">{card.description}</p>
             </div>
-          ))} 
+          ))}
         </div>
       </section>
       <Footer />
