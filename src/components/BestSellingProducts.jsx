@@ -9,9 +9,16 @@ import fourHalfStar from "../assets/Four Half Star.png";
 import { v4 as uuidv4 } from 'uuid';
 import { addToCart } from "../actions/cartSlice";
 import { useDispatch } from "react-redux";
+import { addToWishlist } from "../actions/wishlistSlice";
+import PropTypes from 'prop-types';
 
-const BestSellingProducts = () => {
+const BestSellingProducts = ({setShowToast, setShowCardToast}) => {
   const dispatch = useDispatch();
+
+  BestSellingProducts.propTypes = {
+    setShowToast: PropTypes.func.isRequired,
+    setShowCardToast: PropTypes.func.isRequired,
+  };
 
   const products = [
     {
@@ -58,6 +65,12 @@ const BestSellingProducts = () => {
   
   const addItemToCart = (product) => {
     dispatch(addToCart(product));
+    setShowCardToast((state) => !state);
+  }
+  
+  const addItemToWishlist = (product) => {
+    dispatch(addToWishlist(product));
+    setShowToast((state) => !state);
   }
 
   return (
@@ -86,12 +99,12 @@ const BestSellingProducts = () => {
                 <div className="h-full bg-[#F5F5F5] p-2">
                   <div className="flex justify-end">
                     <div className="flex flex-col gap-2 z-10">
-                      <div className="rounded-full p-2 py-1 bg-white">
+                    <button onClick={() => addItemToWishlist(product)} className="rounded-full p-2 py-1 bg-white">
                         <FontAwesomeIcon icon={faHeart} />
-                      </div>
-                      <div className="rounded-full p-2 py-1 bg-white">
+                      </button>
+                      <button className="rounded-full p-2 py-1 bg-white">
                         <FontAwesomeIcon icon={faEye} />
-                      </div>
+                      </button>
                     </div>
                   </div>
                   <div className="flex justify-center">

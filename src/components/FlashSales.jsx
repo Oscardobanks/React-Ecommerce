@@ -15,11 +15,18 @@ import fourHalfStar from "../assets/Four Half Star.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../actions/cartSlice";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { addToWishlist } from "../actions/wishlistSlice";
+import PropTypes from 'prop-types';
 
-const FlashSales = () => {
+const FlashSales = ({setShowToast, setShowCardToast}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  FlashSales.propTypes = {
+    setShowToast: PropTypes.func.isRequired,
+    setShowCardToast: PropTypes.func.isRequired,
+  };
 
   const flashSales = [
     {
@@ -73,10 +80,17 @@ const FlashSales = () => {
 
   const addItemToCart = (flashSale) => {
     dispatch(addToCart(flashSale));
-  }
+    setShowCardToast((state) => !state);
+  };
+
+  const addItemToWishlist = (flashSale) => {
+    dispatch(addToWishlist(flashSale));
+    setShowToast((state) => !state);
+  };
 
   return (
     <div>
+
       <section className="mt-20">
         <div className="flex items-center gap-2">
           <span className="bg-red-700 rounded ps-2 pe-1 py-3 pt-4"></span>
@@ -128,15 +142,18 @@ const FlashSales = () => {
                       {flashSale.percent}
                     </div>
                     <div className="flex flex-col gap-2 ms-32 z-10">
-                      <div className="rounded-full p-2 py-1 bg-white">
+                      <button
+                        onClick={() => addItemToWishlist(flashSale)}
+                        className="rounded-full p-2 py-1 bg-white"
+                      >
                         <FontAwesomeIcon icon={faHeart} />
-                      </div>
-                      <div
+                      </button>
+                      <button
                         onClick={showDetails}
-                        className="rounded-full p-2 py-1 bg-white cursor-pointer"
+                        className="rounded-full p-2 py-1 bg-white"
                       >
                         <FontAwesomeIcon icon={faEye} />
-                      </div>
+                      </button>
                     </div>
                   </div>
                   <div className="flex justify-center">
@@ -144,7 +161,10 @@ const FlashSales = () => {
                   </div>
                 </div>
                 <div className="intro hidden absolute left-0 right-0 bottom-0 transition-transform duration-700">
-                  <button onClick={() => addItemToCart(flashSale)} className="w-full py-1 bg-black text-white">
+                  <button
+                    onClick={() => addItemToCart(flashSale)}
+                    className="w-full py-1 bg-black text-white"
+                  >
                     Add To Cart
                   </button>
                 </div>
